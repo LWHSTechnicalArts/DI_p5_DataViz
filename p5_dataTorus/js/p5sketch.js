@@ -14,7 +14,7 @@ var z = 0;
 function preload() {
     //table is comma separated value "csv"
     //and has no header specifying the columns labels
-    table = loadTable("assets/data.csv", "csv", "noHeader");
+    table = loadTable('assets/data.csv', 'csv', 'noHeader');
 }
 
 function setup() {
@@ -34,7 +34,7 @@ function draw() {
 
     for (var r = 0; r < table.getRowCount(); r++) {
         row = table.getRow(r);
-        
+
         time = row.getNum(0);
         sensor = row.getNum(1);
 
@@ -49,13 +49,16 @@ function draw() {
         z = 0;
 
         x = (x * 3)-400;
-        y = (y * 2)  
+        y = (y * 2)
 
         push();
         translate(x, y, z);
         //rotateZ(frameCount * 0.01);
         //rotateX(frameCount * 0.01);
         rotateY(frameCount * 0.01);
+        //normalMaterial()
+        pointLight(255, 255, 255, mouseX, mouseY, 0);
+        specularMaterial(250, 0, 200);
         torus(sensor);
         pop();
 

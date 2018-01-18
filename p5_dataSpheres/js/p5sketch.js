@@ -14,7 +14,7 @@ var z = 0;
 function preload() {
     //table is comma separated value "csv"
     //and has no header specifying the columns labels
-    table = loadTable("assets/data.csv", "csv", "noHeader");
+    table = loadTable('assets/data.csv', 'csv', 'noHeader');
 }
 
 function setup() {
@@ -59,6 +59,7 @@ function draw() {
         translate(x, y, z);
         rotateX(-0.5);
         rotateY(1);
+        normalMaterial();
         sphere(sensor);
         pop();
     }

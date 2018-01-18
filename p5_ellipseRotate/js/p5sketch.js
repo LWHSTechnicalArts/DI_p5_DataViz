@@ -15,7 +15,7 @@ var y;
 function preload() {
     //table is comma separated value "csv"
     //and has no header specifying the columns labels
-    table = loadTable("assets/data.csv", "csv", "noHeader");
+    table = loadTable('assets/data.csv', 'csv', 'noHeader');
 }
 
 function setup() {

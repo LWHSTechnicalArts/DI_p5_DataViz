@@ -14,7 +14,7 @@ var y;
 function preload() {
     //table is comma separated value "csv"
     //and has no header specifying the columns labels
-    table = loadTable("assets/light.csv", "csv", "noHeader");
+    table = loadTable('assets/light.csv', 'csv', 'noHeader');
 }
 
 function setup() {
@@ -35,7 +35,7 @@ function setup() {
         time = map(time, 7, 80, 0, width); //remap the time variable
         sensor = map(sensor, 200, 1000, height, 0); //remap the sensor variable
 
-        println(parseInt(time) + " " + parseInt(sensor) + " " + room); //optional but helpful
+        print(parseInt(time) + " " + parseInt(sensor) + " " + room); //optional but helpful
         noFill();
 
         if ((sensor > pSensorData + 40) || (sensor < pSensorData - 40)) { //keeps data from being redundant

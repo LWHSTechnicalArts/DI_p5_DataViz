@@ -17,7 +17,7 @@ var ptime;
 function preload() {
     //table is comma separated value "csv"
     //and has no header specifying the columns labels
-    table = loadTable("assets/light.csv", "csv", "noHeader");
+    table = loadTable('assets/light.csv', 'csv', 'noHeader');
 }
 
 function setup() {
