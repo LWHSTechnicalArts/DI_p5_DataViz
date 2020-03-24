@@ -31,7 +31,7 @@ function setup() {
     angle = TWO_PI/(table.getRowCount());   //set rotation angle, TW0_PI is a full circle
 
     //iterate thorough all rows of CSV file
-    for (var r = 0; r < table.getRowCount(); r++) {
+    for (let r = 0; r < table.getRowCount(); r++) {
         row = table.getRow(r);
         //print it column by column
         //note: a row is an object, not an array
