@@ -1,14 +1,14 @@
 // Given the CSV file "data.csv"
 // in the project's "assets" folder:
 
-var table;
-var row;
-var time;
-var sensor;
-var spacing = 25;
+let table;
+let row;
+let time;
+let sensor;
+let spacing = 50;
 
-var x;
-var y;
+let x;
+let y;
 
 function preload() {
     //table is comma separated value "csv"
@@ -19,7 +19,7 @@ function preload() {
 function setup() {
     //setup look
     createCanvas(1000, 600);
-    background(220, 0, 100);
+    background(255);
     rectMode(CORNERS);
     //location variables
 
@@ -27,14 +27,14 @@ function setup() {
     y = height - 50;
 
     //draw graph lines
-    stroke(255);
-    for (var i = 20; i < y; i += 10) {
-        line(20, i, 500, i);
+    stroke(100);
+    for (let i = 0; i < height; i += 50) {
+        line(20, i, 1000, i);
         text(550 - parseInt(i), 20, i);
     }
 
     //iterate thorough all rows of CSV file
-    for (var r = 0; r < table.getRowCount(); r++) {
+    for (let r = 0; r < table.getRowCount(); r++) {
         row = table.getRow(r);
         //print it column by column
         //note: a row is an object, not an array
@@ -44,14 +44,14 @@ function setup() {
         print(time); //optional but helpful
         print(sensor);
 
-        time = map(time, 0, 50, 30, 255); //remap the time variable
-        sensor = map(sensor, 40, 30000, 25, 450); //remap the sensor variable
+        scaled_time = map(time, 0, 50, 30, 255); //remap the time variable
+        scaled_sensor = map(sensor, 40, 30000, 25, 450); //remap the sensor variable
         //look of ellipses
-        fill(255, 100, time, 220); //time changes the fill color
-        strokeWeight(1);
-        stroke(time);
+        fill(255, 100, scaled_time, 220); //time changes the fill color
+        strokeWeight(2);
+        stroke(0);
 
-        rect(x, y, x + spacing, y - sensor);
+        rect(x, y, x + spacing, y - scaled_sensor);
 
 
         textAlign(CENTER);
@@ -60,7 +60,6 @@ function setup() {
         x += spacing;
     }
     noStroke();
-    text("level", 30, y + 10);
 }
 
 function draw() {
