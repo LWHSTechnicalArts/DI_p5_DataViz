@@ -1,15 +1,15 @@
 // Given the CSV file "data.csv"
 // in the project's "assets" folder:
 
-var table;
-var row;
-var time;
-var sensor;
-var room;
-var pSensorData;
+let table;
+let row;
+let time;
+let sensor;
+let room;
+let previousSensorData;
 
-var x;
-var y;
+let x;
+let y;
 
 function preload() {
     //table is comma separated value "csv"
@@ -23,43 +23,62 @@ function setup() {
     background(200, 200, 210);
 
     beginShape(); //line graph starts here
+    
     //iterate thorough all rows of CSV file
-    for (var r = 0; r < table.getRowCount(); r++) {
+    for (let r = 0; r < table.getRowCount(); r++) {
         row = table.getRow(r);
         //print it column by column
         //note: a row is an object, not an array
         time = row.getNum(0);
         sensor = row.getNum(1);
-        room = row.getString(2);
+        room = row.getString(2);     //allows you to get word from a spreadsheet
 
-        time = map(time, 7, 80, 0, width); //remap the time variable
-        sensor = map(sensor, 200, 1000, height, 0); //remap the sensor variable
+        mapped_time = map(time, 7, 80, 0, width); //remap the time variable
+        mapped_sensor = map(sensor, 200, 1000, height, 0); //remap the sensor variable
 
-        print(parseInt(time) + " " + parseInt(sensor) + " " + room); //optional but helpful
+        print(parseInt(mapped_time) + " " + parseInt(mapped_sensor) + " " + room); //optional but helpful
+        
         noFill();
 
-        if ((sensor > pSensorData + 40) || (sensor < pSensorData - 40)) { //keeps data from being redundant
-            x = time;
-            y = sensor;
+        if ((mapped_sensor > previousSensorData + 20) || (mapped_sensor < previousSensorData - 20)) { //keeps data from being too redundant
+            x = mapped_time;
+            y = mapped_sensor;
+
+            strokeWeight(1);
+            vertex(x, y);  // bend point in main line
 
             //look of ellipses
-            fill(255, 100, time, 220); //time changes the fill color
-            strokeWeight(2);
+            push()
+            fill(255, 10, 80, 100); //ellipse fill color
+            strokeWeight(0);
+            ellipse(x, y, 60, 60); //ellipse for visual effect
+            fill(0); //ellipse fill color
+            ellipse(x, y, 10, 10); //ellipse for visual effect
+            pop()
 
-            vertex(x, y);
-
-            fill(0, 10, 80); //ellipse fill color
-            ellipse(x, y, 50, 50); //ellipse for visual effect
-            fill(255); //text color
+            //look of text
+            fill(100); 
             textAlign(CENTER);
             textSize(20);
-            text(room, x, y);
+            text(room, x-50, y);
+
+            line(0, height-15, width, height-15);
+            fill(0); 
+            textSize(8);
+            text("| "+parseInt(mapped_time)+" |", x, height-5);
         }
-        pSensorData = sensor; //saves current data to compare with next data
+        previousSensorData = mapped_sensor; //saves current data to compare with next data
     }
+
     endShape(); //line graph ends here
-    textSize(30);
-    text("Room Luminosity", 200, height - 50); //Visualization Title
+    
+    //Visualization Title
+    textSize(20);
+    fill(0);
+    text("Room-by-Room Light Intensity", 200, height - 50); 
+   
+    textSize(10);
+    text("Seconds in the Journey:", 60, height - 5);
 }
 
 function draw() {
