@@ -6,7 +6,7 @@ let row;
 let time;
 let sensor;
 let room;
-let previousSensorData;
+let previousSensorData = 0;
 
 let x;
 let y;
@@ -78,7 +78,7 @@ function setup() {
     text("Room-by-Room Light Intensity", 200, height - 50); 
    
     textSize(10);
-    text("Seconds in the Journey:", 60, height - 5);
+    text("Seconds in the Journey:", 60, height - 20);
 }
 
 function draw() {
