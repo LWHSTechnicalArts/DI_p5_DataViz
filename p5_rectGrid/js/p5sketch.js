@@ -1,14 +1,17 @@
-// Given the CSV file "data.csv"
-// in the project's "assets" folder:
+// CSV file "data.csv" is in the project's "assets" folder:
 
-var table;
-var row;
-var time;
-var sensor;
-var spacing = 150;
+let table;
+let row;
+let time;
+let sensor;
+let spacing = 150;
 
-var x;
-var y;
+let x;
+let y;
+let i =40;
+var frameNumber = 0;
+
+let dataTitle = "data!"
 
 function preload() {
     //table is comma separated value "csv"
@@ -19,7 +22,7 @@ function preload() {
 function setup() {
     //setup look
     createCanvas(1000, 600);
-    background(255, 0, 26);
+    background(170, 0, 26);
     rectMode(CENTER);
     //location variables
 
@@ -37,21 +40,21 @@ function setup() {
         print(time); //optional but helpful
         print(sensor);
 
-        time = map(time, 0, 50, 30, 255); //remap the time variable
-        sensor = map(sensor, 40, 30000, 25, 200); //remap the sensor variable
+        scaled_time = map(time, 0, 50, 30, 255); //remap the time variable
+        scaled_sensor = map(sensor, 40, 30000, 25, 150); //remap the sensor variable
         //look of ellipses
-        fill(255, 100, time, 220); //time changes the fill color
-        strokeWeight(1);
-        stroke(time);
+        fill(255, 100, scaled_time, 220); //time changes the fill color
+        strokeWeight(2);
+        stroke(scaled_time);
 
-        rect(x, y, sensor, sensor);
-
+        rect(x, y, scaled_sensor, scaled_sensor, 20);
 
         textAlign(CENTER);
         fill(255);
+        noStroke();
         text(parseInt(sensor), x, y); //printing sensor value as int to avoid decimal places
 
-        x += spacing;
+        x += spacing;                //creates a new row if the x value becomes to close to the right of the canvas
         if (x > width - spacing) {
             x = spacing;
             y += spacing;
@@ -60,5 +63,23 @@ function setup() {
 }
 
 function draw() {
-    //nothing here
+//text animation
+    while (i < width) {
+        // get ith element of data array
+        let d = dataTitle[i];
+        // place text at a random place
+        fill(random(255),random(255));
+        textSize(15)
+        text(dataTitle, i, height-30);
+        i = i + 100;
+    }
+
+    frameNumber++;
+    if (frameNumber > 5) {
+        frameNumber = 0;
+        i=40;
+        fill(170, 0, 26);
+        rectMode(CORNER)
+        rect(0,height-80,width,height);
+    }
 }
