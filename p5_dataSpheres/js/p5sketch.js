@@ -1,15 +1,15 @@
 // Given the CSV file "data.csv"
 // in the project's "assets" folder:
 
-var table;
-var row;
-var r = 0;
-var time;
-var sensor;
+let table;
+let row;
+let r = 0;
+let time;
+let sensor;
 
-var x = 0;
-var y = 0;
-var z = 0;
+let x = 0;
+let y = 0;
+let z = 0;
 
 function preload() {
     //table is comma separated value "csv"
@@ -33,7 +33,7 @@ function draw() {
     background(250);
     rotateY(frameCount * 0.01);
 
-    for (var r = 0; r < table.getRowCount(); r++) {
+    for (let r = 0; r < table.getRowCount(); r++) {
         row = table.getRow(r);
         
         time = row.getNum(0);
