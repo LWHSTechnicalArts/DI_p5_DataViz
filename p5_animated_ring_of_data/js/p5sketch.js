@@ -1,9 +1,14 @@
 //Based on example by: Copyright(c) 2019 by Engin Arslan(https: //codepen.io/enginarslan/pen/aJJmZP)
 //Modified to work with spreadsheet by AKleindolph 2019
 
-var data = [];
-var maxData;
-var table;
+let data = [];
+let scaled_data = [];
+let maxData;
+let table;
+
+let sensor;
+let scaled_sensor;
+
 
 function preload() {
   //table is comma separated value "csv"
@@ -16,7 +21,7 @@ function setup() {
   angleMode(DEGREES);
   rectMode(BOTTOM);
 
-for (var r = 0; r < table.getRowCount(); r++) {
+for (let r = 0; r < table.getRowCount(); r++) {
   row = table.getRow(r);
   time = row.getNum(0);
   sensor = row.getNum(1);
@@ -25,8 +30,9 @@ for (var r = 0; r < table.getRowCount(); r++) {
   print(sensor); 
 
   time = map(time, 0, 50, 30, 255); //remap the time variable
-  sensor = map(sensor, 40, 30000, 25, 450); //remap the sensor variable
+  scaled_sensor = map(sensor, 40, 30000, 25, 450); //remap the sensor variable
   data.push(sensor);
+  scaled_data.push(scaled_sensor);
   }
   maxData = max(data);
 }
@@ -36,28 +42,33 @@ function draw() {
   fill(139, 171, 203);
   stroke(89, 86, 74);
 
-  var angleSeparation = 360 / data.length;
-  var padding = 10;
+  let angleSeparation = 360 / data.length;
+  let padding = 10;
 
   if (frameCount <= 400) {
     maxValue = constrain(frameCount * 2, 0, 400);
   } else {
     maxValue = 400;
   }
-  var offset = 200;
-  var dataMultiplier = (height/2-offset-padding) / maxData;
+  let offset = 200;
+  let dataMultiplier = (height/2-offset-padding) / maxData;
 
-  for (var i = 0; i < data.length; i = i + 1) {
+  for (let i = 0; i < data.length; i = i + 1) {
     push();
-    var currentData = data[i];
-    var finalHeight = currentData * dataMultiplier;
-    var animatedHeight = map(maxValue, 0, 400, 0, finalHeight);
+    let currentData = data[i];
+    let currentScaledData = scaled_data[i];
+    let finalHeight = currentData * dataMultiplier;
+    let animatedHeight = map(maxValue, 0, 400, 0, finalHeight);
     translate(width / 2, height / 2);
     rotate(angleSeparation * i);
+    if (currentData > 15000){
+      fill (0,200,255);
+    }
+    else{
+      fill(139, 171, 203);
+    }
     rect(0, offset, angleSeparation*2, animatedHeight);
-    text(Math.floor(currentData), offset-20, 0);
+    text(Math.floor(currentData), 0, offset);
     pop();
   }
-
-
 }
